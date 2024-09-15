@@ -1,7 +1,7 @@
 <div class="slide">
 
 # Replicant Renders
-The `render` function efficiently takes care of all hiccup -> Virtual DOM -> Real DOM business. In doing so, it:
+The `render` function efficiently takes care of all hiccup -> virtual DOM -> real DOM business. In doing so, it:
 
 <div style="display: flex; flex-direction: row;">
 <div style="display: flex; flex-direction: column; flex: 1;">
