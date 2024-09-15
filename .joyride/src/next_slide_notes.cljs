@@ -115,8 +115,10 @@
 (defn edit-active-note! []
   (p/let [{:keys [slides notes->headers missing]} 
           (gather-missing-notes+)
-          active-document-path (vscode/workspace.asRelativePath 
-                                (some-> vscode/window.activeTextEditor .-document .-uri))
+          active-document-uri (some-> vscode/window.activeTextEditor .-document .-uri)
+          active-document-path (when active-document-uri
+                                 (vscode/workspace.asRelativePath
+                                  active-document-uri))
           active-slide (or ((set slides) active-document-path)
                            (nth slides (:active-slide @next/!state)))
           active-note (string/replace active-slide #"\.md$" "-notes.md")

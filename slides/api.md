@@ -8,9 +8,9 @@
 <div style="display: flex; flex-direction: column; flex: 1;">
 
 * `(replicant.dom/render el hiccup)`<br> 
-  Render `hiccup` (data) to `el` (a DOM element)
+* `(replicant.dom/unmount el)`<br>
 * `(replicant.dom/set-dispatch! f)`<br>
-  Set your dispatch function
+  Register your dispatch function
   * `f` will be called for all non-function events and hooks
   * `f` will receive two arguments:
     1. Trigger details (such as the JS event)

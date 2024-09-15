@@ -1,3 +1,4 @@
 {:slides ["slides/hello.md",
           "slides/replicant.md"
-          "slides/api.md"]}
+          "slides/api.md"
+          "slides/render.md"]}
