@@ -1,0 +1,92 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  padding-top: 20px;
+  overflow: hidden;
+}
+
+.small {
+  font-size: 80%;
+}
+
+.extra-large {
+  font-size: 300%;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+.slide {
+  height: 88vh;
+}
+
+.slide h1 {
+  font-size: 190%;
+}
+
+.mb-0 {
+  margin-bottom: 0px;
+}
+
+.column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+}
+
+.middle {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.gutters-10 {
+  display: flex;
+  margin-top: -10px;
+  margin-left: -10px;
+  margin-bottom: -10px;
+  margin-right: -10px;
+}
+
+.gutters-10 > * {
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+}
+
+.gutters-10.lc-0 :last-child {
+  width: 0;
+}
+
+
+.nav {
+  font-size: small;
+  position: fixed;
+  bottom: 4px;
+}
+.imageBox {
+  position: relative;
+  float: left;
+  width: 90%;
+}
+
+.imageBox .hoverImg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+}
+
+.imageBox:hover .hoverImg {
+  display: block;
+}

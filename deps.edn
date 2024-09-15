@@ -1,0 +1,4 @@
+{:paths ["."]
+ :aliases
+ {:joyride
+  {:extra-deps {joy/joy {:local/root ".joyride"}}}}}

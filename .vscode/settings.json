@@ -1,0 +1,24 @@
+{
+    "cSpell.language": "en",
+    "cSpell.allowCompoundWords": true,
+    "markdown.preview.fontSize": 22,
+    "cSpell.words": [
+        "fooo",
+        "foooo"
+    ],
+    "zenMode.centerLayout": false,
+    "editor.fontSize": 18,
+    "gitlens.gitCommands.sortBy": "name",
+    "window.zoomLevel": 3,
+    "markdown.preview.typographer": true,
+    "markdown.styles": [
+        "style.css"
+    ],
+    "markdown.preview.scrollPreviewWithEditor": false,
+    "markdown.preview.scrollEditorWithPreview": false,
+    "markdown.preview.markEditorSelection": false,
+    "errorLens.enabled": false,
+    "screencastMode.keyboardShortcutsFormat": "commandWithGroup",
+    "markdown.preview.doubleClickToSwitchToEditor": false,
+    "calva.showCalvaSaysOnStart": false,
+}
