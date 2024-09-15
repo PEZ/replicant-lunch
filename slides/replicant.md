@@ -2,7 +2,7 @@
 
 # Replicant
 
-_A native ClojureScript virtual DOM renderer - render hiccup directly_
+_A native ClojureScript virtual DOM renderer - render hiccup directly_ – [github.com/cjohansen/replicant](https://github.com/cjohansen/replicant)
 
 <div style="display: flex; flex-direction: row;">
 <div style="display: flex; flex-direction: column; flex: 1;">
