@@ -7,7 +7,6 @@ fontsize: 20pt
 * Laptop, charger
 * Speech cards
 * Speaker notes
-* Old Books
 * Glasses, case
 
 # Checklist:
@@ -19,20 +18,8 @@ fontsize: 20pt
 
 # Checklist:
 
-* get started repl project
-  * output window closed from column 2
-  * freshly reloaded vscode window
-  * screencast mode on
-* counter demo template
-  * freshly started, including server
-  * counter tested
-  * screencast mode on
-* js_repl.cljs freshly run
-  * display JS-REPL output
-  * screencast mode on
 * presentation project
-  * Closed all editors except hello-one.md
-  * Joyride REPL started and connected
-  * screecast mode *OFF*
+  * Closed all editors except hello.md
+  * Zen mode **ON**
 
 \newpage
