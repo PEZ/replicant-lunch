@@ -4,8 +4,7 @@
             [promesa.core :as p]
             [next-slide]
             [next-slide-notes]
-            [showtime]
-            [file-server]))
+            [showtime]))
 
 (defonce !db (atom {:disposables []}))
 
@@ -44,27 +43,12 @@
     (.show item)
     item))
 
-(defn- init-vic-item! [port]
-  (let [item (vscode/window.createStatusBarItem
-              vscode/StatusBarAlignment.Left
-              -1000)]
-    (set! (.-text item) "vic-20")
-    (set! (.-command item)
-          (clj->js
-           {:command "simpleBrowser.show"
-            :arguments [(str "http://localhost:" port
-                             "/slides/interactive-programming/js-vic-20.html")]}))
-    (.show item)
-    item))
 
 (defn- my-main []
   (println "Hello World, from my-main workspace_activate.cljs script")
   (clear-disposables!)
   (push-disposable (showtime/init!))
   (next-slide/activate!)
-  (let [port 6789]
-    (file-server/start! port)
-    (push-disposable (init-vic-item! port)))
   (push-disposable (add-joy-run-item!)))
 
 (when (= (joyride/invoked-script) joyride/*file*)
