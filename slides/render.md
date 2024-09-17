@@ -1,19 +1,19 @@
 <div class="slide">
 
 # Replicant Renders
-The `render` function efficiently takes care of all hiccup -> virtual DOM -> real DOM business. In doing so, it:
+hiccup -> virtual DOM -> real DOM, considering:
 
 <div style="display: flex; flex-direction: row;">
 <div style="display: flex; flex-direction: column; flex: 1;">
 
-* Manages the lifecycle of the elements in the hiccup
-  * It even manages elements while they are monting and unmounting
-* Looks for life cycle hooks (e.g.<br>`:replicant/on-mount`) 
-  and calls your dispatch function when they are triggered
-  * Hooks can be attached to any element in the hiccup
-* Wires up event handlers
-  * If the handler is a function, it is attached “as is”
-  * If the handler is data, the event will cause your dispatch function to be called with information about the event, plus the data
+* Element lifecycle management
+  * Including `:replicant/mounting` and `:replicant/unmounting`
+  * Hooks can be functions or data
+    * Data oriented hooks become calls to your dispatch function
+  * e.g. `:replicant/on-mount`
+  * Any element, not just the “component”
+* Event handlers can be functions or data
+  * Data oriented handlers become calls to your dispatch function
 </div>
 
 <div class="column" style="flex: 1; max-height: 75svh; font-size: 80%">
@@ -32,6 +32,14 @@ The `render` function efficiently takes care of all hiccup -> virtual DOM -> rea
     {:on {:click [[:db/dissoc
                    :ui/banner-text]]}}
     "Dismiss"]])
+    
+(defn- main-view [state]
+  [:div {:style {:position "relative"}}
+   (when (:ui/banner-text state)
+     (banner-view state))
+   [:h1 "A tiny (and silly) Replicant example"]
+   (edit-view state)
+   (display-view state)])
 ```
 </div>
 

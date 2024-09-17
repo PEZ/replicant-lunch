@@ -2,24 +2,16 @@
 documentclass: extarticle
 fontsize: 20pt
 ---
-# Packlist
+# Checklist:
 
 * Laptop, charger
-* Speech cards
 * Speaker notes
 * Glasses, case
-
-# Checklist:
-
 * Freshly restarted computer
 * Only VS Code and Safari running
-
-\newpage
-
-# Checklist:
-
 * presentation project
   * Closed all editors except hello.md
+  * Jacked in to demo project
   * Zen mode **ON**
-
+  
 \newpage
