@@ -2,16 +2,15 @@
 
 Wednesday, September 18 2024
 
-You find the presentation slides in the `./slides` directory. This is the opening slide:
-* [slides/hello-one.md](slides/hello-one.md)
+You find the presentation slides in the [slides](slides/) directory. This is the opening slide:
+* [slides/hello-one.md](slides/hello.md)
 
 Use the VS Code command **Markdown: Open Preview** to make the file render as a slide. When run as a slide show (using [next-slide.cljs](.joyride/src/next_slide.cljs)) you can use arrow keys to navigate the deck while in Markdown preview mode.
 
 To run the presentation as a slide show you need to:
 
 1. Install the Joyride extension.
-2. run `npm i` from the root of this project.
-3. Reload the VS Code window: **Developer: Reload Window**
+2. Reload the VS Code window: **Developer: Reload Window**
 
 The next-slide.cljs script will automatically activate, when you reload the VS Code window with Joyride installed.
 
