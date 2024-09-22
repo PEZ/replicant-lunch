@@ -1,41 +1,59 @@
 ;; == Keyboard shortcuts ==
 ;; Weird indent because of how comment block/selection works
-    ;;{
-    ;;    "key": "ctrl+alt+j s",
-    ;;    "command": "joyride.runCode",
-    ;;    "args": "(next-slide/activate!)"
-    ;;},
-    ;;{
-    ;;    "key": "ctrl+alt+j ctrl+alt+s",
-    ;;    "command": "joyride.runCode",
-    ;;    "args": "(next-slide/deactivate!)"
-    ;;},
-    ;;{
-    ;;    "key": "ctrl+alt+j ctrl+alt+m",
-    ;;    "command": "markdown.showPreview",
-    ;;},
-    ;;{
-    ;;    "key": "right",
-    ;;    "command": "joyride.runCode",
-    ;;    "args": "(next-slide/next! true)",
-    ;;    "when": "next-slide:active && !inputFocus"
-    ;;},
-    ;;{
-    ;;    "key": "left",
-    ;;    "command": "joyride.runCode",
-    ;;    "args": "(next-slide/next! false)",
-    ;;    "when": "next-slide:active && !inputFocus"
-    ;;},
-    ;;{
-    ;;    "key": "cmd+alt+ctrl+right",
-    ;;    "command": "joyride.runCode",
-    ;;    "args": "(next-slide/next! true)",
-    ;;},
-    ;;{
-    ;;    "key": "cmd+alt+ctrl+left",
-    ;;    "command": "joyride.runCode",
-    ;;    "args": "(next-slide/next! false)"
-    ;;},
+  ;; {
+  ;;   "key": "ctrl+alt+j s",
+  ;;   "command": "joyride.runCode",
+  ;;   "args": "(next-slide/activate!)"
+  ;; },
+  ;; {
+  ;;   "key": "ctrl+alt+j ctrl+alt+s",
+  ;;   "command": "joyride.runCode",
+  ;;   "args": "(next-slide/deactivate!)"
+  ;; },
+  ;; {
+  ;;   "key": "ctrl+alt+j ctrl+alt+m",
+  ;;   "command": "markdown.showPreview"
+  ;; },
+  ;; {
+  ;;   "key": "right",
+  ;;   "command": "joyride.runCode",
+  ;;   "args": "(next-slide/next! true)",
+  ;;   "when": "next-slide:active && !inputFocus"
+  ;; },
+  ;; {
+  ;;   "key": "left",
+  ;;   "command": "joyride.runCode",
+  ;;   "args": "(next-slide/next! false)",
+  ;;   "when": "next-slide:active && !inputFocus"
+  ;; },
+  ;; {
+  ;;   "key": "pagedown",
+  ;;   "command": "joyride.runCode",
+  ;;   "args": "(next-slide/next! true)",
+  ;;   "when": "next-slide:active"
+  ;; },
+  ;; {
+  ;;   "key": "pageup",
+  ;;   "command": "joyride.runCode",
+  ;;   "args": "(next-slide/next! false)",
+  ;;   "when": "next-slide:active"
+  ;; },
+  ;; {
+  ;;   "key": "F5",
+  ;;   "command": "workbench.action.toggleZenMode",
+  ;;   "when": "next-slide:active && !inZenMode"
+  ;; },
+  ;; {
+  ;;   "key": "F5",
+  ;;   "command": "joyride.runCode",
+  ;;   "args": "(next-slide/current!)",
+  ;;   "when": "next-slide:active && inZenMode"
+  ;; },
+  ;; {
+  ;;   "key": "ctrl+alt+cmd+left",
+  ;;   "command": "joyride.runCode",
+  ;;   "args": "(next-slide/restart!)"
+  ;; },
 
 (ns next-slide
   (:require ["vscode" :as vscode]
@@ -60,6 +78,11 @@
           config (edn/read-string config-text)]
     (:slides config)))
 
+(defn current! []
+  (p/let [slides (slides-list+)]
+    (vscode/commands.executeCommand "markdown.showPreview"
+                                    (vscode/Uri.joinPath (ws-root)
+                                                         (nth slides (:active-slide @!state))))))
 (defn next!
   ([]
    (next! true))
@@ -69,9 +92,12 @@
                   #(min (inc %) (dec (count slides)))
                   #(max (dec %) 0))]
      (swap! !state update :active-slide next)
-     (vscode/commands.executeCommand "markdown.showPreview"
-                                     (vscode/Uri.joinPath (ws-root)
-                                                          (nth slides (:active-slide @!state)))))))
+     (current!))))
+
+(defn restart!
+  []
+  (swap! !state assoc :active-slide 0)
+  (current!))
 
 (defn deactivate! []
   (swap! !state assoc :active? false)
@@ -93,5 +119,6 @@
   (next!)
   (next! false)
   (activate!)
+  (restart!)
   (deactivate!)
   :rcf)
