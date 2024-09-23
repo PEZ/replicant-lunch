@@ -57,13 +57,14 @@
 
 (ns next-slide
   (:require ["vscode" :as vscode]
+            ["path" :as path]
             [joyride.core :as joyride]
             [promesa.core :as p]
-            [clojure.edn :as edn]
-            [clojure.string :as string]))
+            [clojure.edn :as edn]))
 
-(def !state (atom {:active? false
-                   :active-slide 0}))
+(def !state (atom {:next/active? false
+                   :next/active-slide 0
+                   :next/config-path nil}))
 
 (defn ws-root []
   (if (not= js/undefined
@@ -71,18 +72,24 @@
     (.-uri (first vscode.workspace.workspaceFolders))
     (vscode/Uri.parse ".")))
 
-(defn slides-list+ []
-  (p/let [config-uri (vscode/Uri.joinPath (ws-root) "slides.edn")
+(defn get-config!+ [config-path]
+  (p/let [config-uri (vscode/Uri.joinPath (ws-root) config-path)
           config-data (vscode/workspace.fs.readFile config-uri)
           config-text (-> (js/Buffer.from config-data) (.toString "utf-8"))
           config (edn/read-string config-text)]
+    config))
+
+(defn slides-list+ []
+  (p/let [config (get-config!+ (apply path/join (:next/config-path @!state)))]
     (:slides config)))
 
 (defn current! []
   (p/let [slides (slides-list+)]
-    (vscode/commands.executeCommand "markdown.showPreview"
-                                    (vscode/Uri.joinPath (ws-root)
-                                                         (nth slides (:active-slide @!state))))))
+    (vscode/commands.executeCommand
+     "markdown.showPreview"
+     (vscode/Uri.joinPath (ws-root)
+                          (nth slides (:active-slide @!state))))))
+
 (defn next!
   ([]
    (next! true))
@@ -100,16 +107,21 @@
   (current!))
 
 (defn deactivate! []
-  (swap! !state assoc :active? false)
+  (swap! !state assoc :next/active? false)
   (vscode/commands.executeCommand "setContext" "next-slide:active" false)
   (vscode/window.showInformationMessage
    (str "next-slide:" "deactivated")))
 
-(defn activate! []
-  (swap! !state assoc :active? true)
-  (vscode/commands.executeCommand "setContext" "next-slide:active" true)
-  (vscode/window.showInformationMessage
-   (str "next-slide:" "activated")))
+(defn activate!
+  ([]
+   (activate! ["slides.edn"]))
+  ([config-path]
+   (swap! !state assoc
+          :next/active? true
+          :next/config-path config-path)
+   (vscode/commands.executeCommand "setContext" "next-slide:active" true)
+   (vscode/window.showInformationMessage
+    (str "next-slide:" "activated"))))
 
 (when (= (joyride/invoked-script) joyride/*file*)
   (activate!))
